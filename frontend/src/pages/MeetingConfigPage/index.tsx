@@ -17,6 +17,7 @@ import useMutation from 'hooks/useMutation';
 import {
   deleteMeetingApi,
   getMeetingData,
+  leaveMeetingApi,
   updateMeetingNameApi,
 } from 'apis/meetingApis';
 import { getUpcomingEventApi } from 'apis/eventApis';
@@ -66,7 +67,7 @@ const MeetingConfigPage = () => {
     }
   );
   const meetingLeaveMutation = useMutation(
-    deleteMeetingApi(meetingId, accessToken),
+    leaveMeetingApi(meetingId, accessToken),
     {
       onSuccess: () => {
         alert('모임을 나갔습니다.');
@@ -95,9 +96,9 @@ const MeetingConfigPage = () => {
     meetingDeleteMutation.mutate({});
   };
 
-  const handleMeetingLeaveClick: React.MouseEventHandler<HTMLButtonElement> = ({
-    currentTarget,
-  }) => {
+  const handleMeetingLeaveClick: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
     meetingLeaveMutation.mutate({});
   };
 
