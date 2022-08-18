@@ -14,14 +14,26 @@ export const getEventsApi =
 
 export const createEventsApi =
   (meetingId: string, accessToken?: User['accessToken']) =>
-  (events: MeetingEvent[]) =>
+  (payload: { events: MeetingEvent[] }) =>
     request<{}>(`/meetings/${meetingId}/events`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ events }),
+      body: JSON.stringify(payload),
+    });
+
+export const deleteEventsApi =
+  (meetingId: string, accessToken?: User['accessToken']) =>
+  (payload: { dates: string[] }) =>
+    request<{}>(`/meetings/${meetingId}/events`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(payload),
     });
 
 export const getUpcomingEventApi =

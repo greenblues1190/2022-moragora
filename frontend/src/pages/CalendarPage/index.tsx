@@ -14,6 +14,7 @@ import useQuery from 'hooks/useQuery';
 import { dateToFormattedString } from 'utils/timeUtil';
 import {
   createEventsApi,
+  deleteEventsApi,
   getEventsApi,
   getUpcomingEventApi,
 } from 'apis/eventApis';
@@ -47,15 +48,32 @@ const CalendarPage = () => {
     }
   );
 
-  const { mutate } = useMutation(createEventsApi(meetingId, user.accessToken), {
-    onSuccess: () => {
-      eventsQuery.refetch();
-      alert('일정을 생성했습니다.');
-    },
-    onError: (error) => {
-      alert(error.message);
-    },
-  });
+  const createEventsMutation = useMutation(
+    createEventsApi(meetingId, user.accessToken),
+    {
+      onSuccess: () => {
+        eventsQuery.refetch();
+        alert('일정을 생성했습니다.');
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+    }
+  );
+
+  const removeEventsMutation = useMutation(
+    deleteEventsApi(meetingId, user.accessToken),
+    {
+      onSuccess: () => {
+        eventsQuery.refetch();
+        alert('일정을 삭제했습니다.');
+      },
+      onError: (error) => {
+        eventsQuery.refetch();
+        alert(error.message);
+      },
+    }
+  );
 
   const {
     events,
@@ -79,11 +97,16 @@ const CalendarPage = () => {
 
   const handleRemoveEventsButtonClick = () => {
     removeEvents(selectedDates);
+    removeEventsMutation.mutate({
+      dates: selectedDates.map((date) => dateToFormattedString(date)),
+    });
     clearSelectedDates();
   };
 
   const handleClickSaveEventsButtonClick = () => {
-    mutate(events);
+    createEventsMutation.mutate({
+      events,
+    });
   };
 
   if (eventsQuery.isLoading) {
