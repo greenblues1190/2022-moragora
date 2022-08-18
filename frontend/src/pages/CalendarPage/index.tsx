@@ -96,7 +96,6 @@ const CalendarPage = () => {
   };
 
   const handleRemoveEventsButtonClick = () => {
-    removeEvents(selectedDates);
     removeEventsMutation.mutate({
       dates: selectedDates.map((date) => dateToFormattedString(date)),
     });
