@@ -102,7 +102,7 @@ export const updateMeetingNameApi =
 export const assignMasterApi =
   (meetingId: number, accessToken: User['accessToken']) =>
   (payload: MeetingMasterAssignRequestBody) =>
-    request(`/meetings/${meetingId}/me`, {
+    request(`/meetings/${meetingId}/master`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
