@@ -1,5 +1,4 @@
 import {
-  Meeting,
   MeetingListResponseBody,
   MeetingMasterAssignRequestBody,
   MeetingNameUpdateRequestBody,
